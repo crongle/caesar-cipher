@@ -1,12 +1,20 @@
 const caesar = function(word, shiftFactor) {
-  let shiftedWord;
-  let shiftedChar;
+  let shiftedWord = "";
+  let shiftedChar = "";
   let wordLength = word.length;
   let caps;
   let i;
-  let extAlph = ['abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'.split('')]; // Alphabet into an array 3 times
+  let extAlph =  Array.from("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"); // Alphabet into an array 3 times
+
+
 
 //Check if a-z
+function azCheck(testChar) {
+  if (testChar.search(/[a-zA-z]/) == -1) {
+    return false;
+  }
+}
+
 
 //Check if caps
 function capCheck(testChar) {
@@ -17,23 +25,25 @@ function capCheck(testChar) {
    return caps;
     }
 
+
 //Go through word chars
   for (i = 0; i < wordLength; i++) {
     let testChar = word.charAt(i);
+    if (azCheck(testChar) == false) { //If testChar is not a letter of the alphabet then it is not altered and the for loop skips to next iteration
+      shiftedWord = shiftedWord + testChar;
+      continue;
+    }
+    let indexNo = (extAlph.indexOf(testChar) + 26 + shiftFactor);
+    shiftedChar = extAlph[indexNo];
+
     caps = capCheck(testChar);
-    shiftedChar = extAlph[(extAlph.indexOf(testChar) + 26 + shiftFactor)];
-    shiftedWord += shiftedChar;
+    if (caps == true) {
+      shiftedChar = shiftedChar.toUpperCase()
+    }
+    shiftedWord = shiftedWord + shiftedChar;
   }
 
-console.log(word, word.length, shiftFactor, shiftedWord, shiftedChar, word.charAt(i), "WORKING");
-
-//Shifts char
-//function shiftChar(testChar) {
-  //  let preShiftIndex = extAlph.indexOf(testChar) + 26; // Gets index of middle appearance of char
-  //  let postShiftIndex = preShiftIndex + shiftFactor;
-  //  let shiftedChar = extALph.indexOf
-  //}
-  return word;
+  return shiftedWord;
 }
 
 module.exports = caesar
