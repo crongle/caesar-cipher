@@ -27,8 +27,11 @@ function capCheck(testChar) {
 
 
 //Go through word chars
-  for (i = 0; i < wordLength; i++) {
+    for (i = 0; i < wordLength; i++) {
     let testChar = word.charAt(i);
+    caps = capCheck(testChar);
+    testChar = testChar.toLowerCase();
+
     if (azCheck(testChar) == false) { //If testChar is not a letter of the alphabet then it is not altered and the for loop skips to next iteration
       shiftedWord = shiftedWord + testChar;
       continue;
@@ -36,14 +39,13 @@ function capCheck(testChar) {
     let indexNo = (extAlph.indexOf(testChar) + 26 + shiftFactor);
     shiftedChar = extAlph[indexNo];
 
-    caps = capCheck(testChar);
     if (caps == true) {
       shiftedChar = shiftedChar.toUpperCase()
     }
     shiftedWord = shiftedWord + shiftedChar;
   }
 
-  return shiftedWord;
+  return shiftedWord; // Returns ciphered string
 }
 
 module.exports = caesar
