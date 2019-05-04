@@ -1,20 +1,9 @@
-const caesar = function(word, shiftFactor) {
-  let shiftedWord = "";
-  let shiftedChar = "";
-  let wordLength = word.length;
-  let caps;
-  let i;
-  let extAlph =  Array.from("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"); // Alphabet into an array 3 times
-
-
-
-//Check if a-z
+//Check if a-Z
 function azCheck(testChar) {
   if (testChar.search(/[a-zA-z]/) == -1) {
     return false;
   }
 }
-
 
 //Check if caps
 function capCheck(testChar) {
@@ -24,10 +13,21 @@ function capCheck(testChar) {
    caps = true; }
    return caps;
     }
+    
+//Main funtion
+const caesar = function(word, shiftFactor) {
+  let shiftedWord = "";
+  let shiftedChar = "";
+  let wordLength = word.length;
+  let caps;
+  let i;
+  let extAlph =  Array.from("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"); // Alphabet into an array 3 times
 
+  if (shiftFactor > 26) { //Adjusts for larger shift factors which would loop through multiple alphabet wraps
+    shiftFactor = shiftFactor % 26;
+  }
 
-//Go through word chars
-    for (i = 0; i < wordLength; i++) {
+  for (i = 0; i < wordLength; i++) { //Main test loop
     let testChar = word.charAt(i);
     caps = capCheck(testChar);
     testChar = testChar.toLowerCase();
@@ -36,10 +36,10 @@ function capCheck(testChar) {
       shiftedWord = shiftedWord + testChar;
       continue;
     }
-    let indexNo = (extAlph.indexOf(testChar) + 26 + shiftFactor);
+    let indexNo = (extAlph.indexOf(testChar) + 26 + shiftFactor); //Finds cipher value from array
     shiftedChar = extAlph[indexNo];
 
-    if (caps == true) {
+    if (caps == true) { // Recapitalises chars as needed
       shiftedChar = shiftedChar.toUpperCase()
     }
     shiftedWord = shiftedWord + shiftedChar;
